@@ -3,20 +3,21 @@ $(document).ready(function () {
     $('.black-circle, .white-circle').click(function () {
         var $class = $(this).attr('class').split(' ');
         var parentClass = $(this).parent().attr('class').split(' ');
-        var oldRating = parseInt(parentClass[3]);
+        var oldRating = parseInt(parentClass[2]);
         var newRating = parseInt($class[1]);
         if ($class[0] == 'white-circle') {
             var newRating = parseInt($class[1]) + oldRating;
         } else {
             var newRating = parseInt($class[1]);
         }
-        newParentClass = parentClass[0] + ' ' + parentClass[1] + ' ' + parentClass[2] + ' ' + newRating;
+        newParentClass = parentClass[0] + ' ' + parentClass[1] + ' ' + newRating;
         $(this).parent().attr('class', newParentClass);
         var nb = 1;
         $(this).parent().children('div').each(function (index) {
             if ($(this).attr('class') != "col-md-3") {
-                if (newRating > index) {
-                    $(this).attr('class', 'black-circle ' + (index + 1));
+                console.log(newRating.index);
+                if (newRating + 1 > index) {
+                    $(this).attr('class', 'black-circle ' + (index));
                 } else {
                     $(this).attr('class', 'white-circle ' + (nb));
                     nb++;
