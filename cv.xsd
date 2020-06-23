@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xs:import namespace="http://www.w3.org/1999/XSL/Transform" schemaLocation="xsl.xsd"/>
+    <xs:element name="doc">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="xsl:stylesheet"/>
+                <xs:element ref="cv"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="html">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="head"/>
+                <xs:element ref="body"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="head">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="title"/>
+                <xs:element ref="style"/>
+                <xs:element maxOccurs="unbounded" ref="link"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="title">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="xsl:value-of"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="style">
+        <xs:complexType mixed="true">
+            <xs:attribute name="type" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="link">
+        <xs:complexType>
+            <xs:attribute name="href" use="required" type="xs:NCName"/>
+            <xs:attribute name="rel" use="required" type="xs:NCName"/>
+            <xs:attribute name="type" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="body">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="div"/>
+                <xs:element maxOccurs="unbounded" ref="script"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="script">
+        <xs:complexType>
+            <xs:attribute name="src" use="required" type="xs:NCName"/>
+            <xs:attribute name="type" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="cv">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="entete"/>
+                <xs:element ref="stages"/>
+                <xs:element ref="Formations"/>
+                <xs:element maxOccurs="unbounded" ref="langues"/>
+                <xs:element maxOccurs="unbounded" ref="competences"/>
+                <xs:element maxOccurs="unbounded" ref="project"/>
+                <xs:element ref="loisirs"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="entete">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="nom"/>
+                <xs:element ref="prenom"/>
+                <xs:element ref="dateDeNaissance"/>
+                <xs:element ref="nationalite"/>
+                <xs:element ref="telephone"/>
+                <xs:element ref="mail"/>
+                <xs:element ref="description"/>
+            </xs:sequence>
+            <xs:attribute name="address" use="required"/>
+            <xs:attribute name="github" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="nom" type="xs:NCName"/>
+    <xs:element name="prenom" type="xs:NCName"/>
+    <xs:element name="dateDeNaissance" type="xs:string"/>
+    <xs:element name="nationalite" type="xs:NCName"/>
+    <xs:element name="telephone" type="xs:string"/>
+    <xs:element name="mail" type="xs:string"/>
+    <xs:element name="stages">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="stage"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="stage">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="titre"/>
+                <xs:element ref="date"/>
+                <xs:element ref="description"/>
+            </xs:sequence>
+            <xs:attribute name="establishment" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="date">
+        <xs:complexType>
+            <xs:attribute name="from" use="required"/>
+            <xs:attribute name="to"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Formations">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="diplome"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="diplome">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="annee"/>
+                <xs:element ref="intitule"/>
+            </xs:sequence>
+            <xs:attribute name="establishment"/>
+            <xs:attribute name="type" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="annee">
+        <xs:complexType>
+            <xs:attribute name="from" use="required" type="xs:integer"/>
+            <xs:attribute name="to" type="xs:integer"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="langues">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="langue"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="langue">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="intitule"/>
+                <xs:element ref="niveau"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="competences">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="competence"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="competence">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="titre"/>
+                <xs:element ref="niveau"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="project">
+        <xs:complexType>
+            <xs:attribute name="description" use="required"/>
+            <xs:attribute name="type" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="loisirs">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="loisir"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="loisir">
+        <xs:complexType>
+            <xs:attribute name="description" use="required"/>
+            <xs:attribute name="type" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="span">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="h3"/>
+                <xs:element ref="xsl:call-template"/>
+                <xs:element ref="xsl:value-of"/>
+                <xs:element ref="img"/>
+            </xs:choice>
+            <xs:attribute name="class"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="img">
+        <xs:complexType>
+            <xs:attribute name="alt" use="required"/>
+            <xs:attribute name="class" use="required"/>
+            <xs:attribute name="id" use="required" type="xs:NCName"/>
+            <xs:attribute name="src" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="h5">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="span"/>
+                <xs:element ref="xsl:value-of"/>
+                <xs:element ref="strong"/>
+            </xs:choice>
+            <xs:attribute name="class" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="strong">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="xsl:value-of"/>
+                <xs:element minOccurs="0" ref="div"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="div">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="h5"/>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="div"/>
+                    <xs:element ref="h3"/>
+                    <xs:element ref="p"/>
+                    <xs:element ref="span"/>
+                    <xs:element ref="xsl:call-template"/>
+                    <xs:element ref="ul"/>
+                </xs:choice>
+            </xs:sequence>
+            <xs:attribute name="class"/>
+            <xs:attribute name="id" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ul">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="li"/>
+            </xs:sequence>
+            <xs:attribute name="class" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="li">
+        <xs:complexType mixed="true">
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="xsl:value-of"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="p">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element ref="xsl:value-of"/>
+                <xs:element ref="em"/>
+            </xs:choice>
+            <xs:attribute name="class" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="em">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="xsl:value-of"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="description" type="xs:string"/>
+    <xs:element name="titre" type="xs:string"/>
+    <xs:element name="intitule" type="xs:string"/>
+    <xs:element name="niveau" type="xs:integer"/>
+    <xs:element name="h3">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="span"/>
+                <xs:element ref="xsl:value-of"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

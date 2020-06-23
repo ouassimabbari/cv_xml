@@ -1,0 +1,273 @@
+<?xml encoding="utf-8"?>
+
+<!ELEMENT doc (xsl:stylesheet,cv)>
+<!ATTLIST doc
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT xsl:stylesheet (xsl:output,xsl:template+)>
+<!ATTLIST xsl:stylesheet
+    xmlns:xsl CDATA #FIXED 'http://www.w3.org/1999/XSL/Transform'
+    id NMTOKEN #REQUIRED
+    version CDATA #REQUIRED>
+
+<!ELEMENT cv (entete,stages,Formations,langues+,competences+,project+,loisirs)>
+<!ATTLIST cv
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT xsl:output EMPTY>
+<!ATTLIST xsl:output
+    xmlns:xsl CDATA #FIXED 'http://www.w3.org/1999/XSL/Transform'
+    method NMTOKEN #REQUIRED>
+
+<!ELEMENT xsl:template (html?,xsl:param*,(span|xsl:call-template|xsl:choose|xsl:if)?,h5?,xsl:for-each?)>
+<!ATTLIST xsl:template
+    xmlns:xsl CDATA #FIXED 'http://www.w3.org/1999/XSL/Transform'
+    match CDATA #IMPLIED
+    name NMTOKEN #IMPLIED>
+
+<!ELEMENT entete (nom,prenom,dateDeNaissance,nationalite,telephone,mail,description)>
+<!ATTLIST entete
+    xmlns CDATA #FIXED ''
+    address CDATA #REQUIRED
+    github CDATA #REQUIRED>
+
+<!ELEMENT stages (stage)+>
+<!ATTLIST stages
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT Formations (diplome)+>
+<!ATTLIST Formations
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT langues (langue)>
+<!ATTLIST langues
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT competences (competence)>
+<!ATTLIST competences
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT project EMPTY>
+<!ATTLIST project
+    xmlns CDATA #FIXED ''
+    description CDATA #REQUIRED
+    type CDATA #REQUIRED>
+
+<!ELEMENT loisirs (loisir)+>
+<!ATTLIST loisirs
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT html (head,body)>
+<!ATTLIST html
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT xsl:param EMPTY>
+<!ATTLIST xsl:param
+    xmlns:xsl CDATA #FIXED 'http://www.w3.org/1999/XSL/Transform'
+    name NMTOKEN #REQUIRED>
+
+<!ELEMENT xsl:for-each (xsl:if?,(div|(h5,p)))>
+<!ATTLIST xsl:for-each
+    xmlns:xsl CDATA #FIXED 'http://www.w3.org/1999/XSL/Transform'
+    select CDATA #REQUIRED>
+
+<!ELEMENT nom (#PCDATA)>
+<!ATTLIST nom
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT prenom (#PCDATA)>
+<!ATTLIST prenom
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT dateDeNaissance (#PCDATA)>
+<!ATTLIST dateDeNaissance
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT nationalite (#PCDATA)>
+<!ATTLIST nationalite
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT telephone (#PCDATA)>
+<!ATTLIST telephone
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT mail (#PCDATA)>
+<!ATTLIST mail
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT stage (titre,date,description)>
+<!ATTLIST stage
+    xmlns CDATA #FIXED ''
+    establishment NMTOKEN #REQUIRED>
+
+<!ELEMENT diplome (annee,intitule)>
+<!ATTLIST diplome
+    xmlns CDATA #FIXED ''
+    establishment CDATA #IMPLIED
+    type CDATA #REQUIRED>
+
+<!ELEMENT langue (intitule,niveau)>
+<!ATTLIST langue
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT competence (titre,niveau)>
+<!ATTLIST competence
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT loisir EMPTY>
+<!ATTLIST loisir
+    xmlns CDATA #FIXED ''
+    description CDATA #REQUIRED
+    type NMTOKEN #REQUIRED>
+
+<!ELEMENT head (title,style,link+)>
+<!ATTLIST head
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT body (div,script+)>
+<!ATTLIST body
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT date EMPTY>
+<!ATTLIST date
+    xmlns CDATA #FIXED ''
+    from CDATA #REQUIRED
+    to CDATA #IMPLIED>
+
+<!ELEMENT annee EMPTY>
+<!ATTLIST annee
+    xmlns CDATA #FIXED ''
+    from CDATA #REQUIRED
+    to CDATA #IMPLIED>
+
+<!ELEMENT title (xsl:value-of)>
+<!ATTLIST title
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT style (#PCDATA)>
+<!ATTLIST style
+    xmlns CDATA #FIXED ''
+    type CDATA #REQUIRED>
+
+<!ELEMENT link EMPTY>
+<!ATTLIST link
+    xmlns CDATA #FIXED ''
+    href NMTOKEN #REQUIRED
+    rel NMTOKEN #REQUIRED
+    type CDATA #REQUIRED>
+
+<!ELEMENT script EMPTY>
+<!ATTLIST script
+    xmlns CDATA #FIXED ''
+    src NMTOKEN #REQUIRED
+    type CDATA #REQUIRED>
+
+<!ELEMENT xsl:value-of EMPTY>
+<!ATTLIST xsl:value-of
+    xmlns:xsl CDATA #FIXED 'http://www.w3.org/1999/XSL/Transform'
+    select CDATA #REQUIRED>
+
+<!ELEMENT div (h5?,(div|h3|p|span|xsl:call-template|ul)*)>
+<!ATTLIST div
+    xmlns CDATA #FIXED ''
+    class CDATA #IMPLIED
+    id NMTOKEN #IMPLIED>
+
+<!ELEMENT ul (li)+>
+<!ATTLIST ul
+    xmlns CDATA #FIXED ''
+    class NMTOKEN #REQUIRED>
+
+<!ELEMENT li (#PCDATA|xsl:value-of)*>
+<!ATTLIST li
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT span (#PCDATA|h3|xsl:call-template|xsl:value-of|img)*>
+<!ATTLIST span
+    xmlns CDATA #FIXED ''
+    class CDATA #IMPLIED>
+
+<!ELEMENT img EMPTY>
+<!ATTLIST img
+    xmlns CDATA #FIXED ''
+    alt CDATA #REQUIRED
+    class CDATA #REQUIRED
+    id NMTOKEN #REQUIRED
+    src NMTOKEN #REQUIRED>
+
+<!ELEMENT xsl:if (h5|xsl:choose)>
+<!ATTLIST xsl:if
+    xmlns:xsl CDATA #FIXED 'http://www.w3.org/1999/XSL/Transform'
+    test CDATA #REQUIRED>
+
+<!ELEMENT xsl:call-template (xsl:with-param)*>
+<!ATTLIST xsl:call-template
+    xmlns:xsl CDATA #FIXED 'http://www.w3.org/1999/XSL/Transform'
+    name NMTOKEN #REQUIRED>
+
+<!ELEMENT xsl:with-param EMPTY>
+<!ATTLIST xsl:with-param
+    xmlns:xsl CDATA #FIXED 'http://www.w3.org/1999/XSL/Transform'
+    name NMTOKEN #REQUIRED
+    select CDATA #REQUIRED>
+
+<!ELEMENT xsl:choose (xsl:when,xsl:otherwise)>
+<!ATTLIST xsl:choose
+    xmlns:xsl CDATA #FIXED 'http://www.w3.org/1999/XSL/Transform'>
+
+<!ELEMENT xsl:when (span|(div,xsl:text))>
+<!ATTLIST xsl:when
+    xmlns:xsl CDATA #FIXED 'http://www.w3.org/1999/XSL/Transform'
+    test CDATA #REQUIRED>
+
+<!ELEMENT xsl:otherwise (span|(xsl:variable,xsl:call-template+))>
+<!ATTLIST xsl:otherwise
+    xmlns:xsl CDATA #FIXED 'http://www.w3.org/1999/XSL/Transform'>
+
+<!ELEMENT xsl:text EMPTY>
+<!ATTLIST xsl:text
+    xmlns:xsl CDATA #FIXED 'http://www.w3.org/1999/XSL/Transform'>
+
+<!ELEMENT xsl:variable EMPTY>
+<!ATTLIST xsl:variable
+    xmlns:xsl CDATA #FIXED 'http://www.w3.org/1999/XSL/Transform'
+    name NMTOKEN #REQUIRED
+    select CDATA #REQUIRED>
+
+<!ELEMENT h5 (#PCDATA|span|xsl:value-of|strong)*>
+<!ATTLIST h5
+    xmlns CDATA #FIXED ''
+    class CDATA #REQUIRED>
+
+<!ELEMENT strong (xsl:value-of,div?)>
+<!ATTLIST strong
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT p (xsl:value-of|em)>
+<!ATTLIST p
+    xmlns CDATA #FIXED ''
+    class NMTOKEN #IMPLIED>
+
+<!ELEMENT em (xsl:value-of)>
+<!ATTLIST em
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT description (#PCDATA)>
+<!ATTLIST description
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT titre (#PCDATA)>
+<!ATTLIST titre
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT intitule (#PCDATA)>
+<!ATTLIST intitule
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT niveau (#PCDATA)>
+<!ATTLIST niveau
+    xmlns CDATA #FIXED ''>
+
+<!ELEMENT h3 (#PCDATA|span|xsl:value-of)*>
+<!ATTLIST h3
+    xmlns CDATA #FIXED ''>

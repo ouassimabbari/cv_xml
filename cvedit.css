@@ -1,0 +1,19 @@
+.qualtype:hover,
+.qualcontent:hover,
+.jobtitle:hover,
+.jobdescription:hover,
+.thisElseThat:hover,
+.projectDescription:hover,
+.project:hover,
+.hobTitle:hover,
+.hobContent:hover {
+    background-color: #FFCCCC;
+    cursor: hand;
+    cursor: pointer;
+}
+
+@media print {
+    #printbutton {
+        visibility: hidden;
+    }
+}

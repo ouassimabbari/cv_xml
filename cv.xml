@@ -1,0 +1,515 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xml" href="#stylesheet"?>
+<!DOCTYPE doc [
+<!ATTLIST xsl:stylesheet
+  id	ID	#IMPLIED>
+]>
+<doc>
+    <xsl:stylesheet version="1.0" id="stylesheet" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+            <xsl:output method="html"/>
+            <xsl:template match="xsl:stylesheet" />
+            <xsl:template match="/">
+                <html>
+                    <head>
+                        <title><xsl:value-of select="//cv/me/@name"/></title>
+                        <style type="text/css">
+						@media print
+						{
+                            color-adjust: exact;
+                            -webkit-print-color-adjust: exact;
+                            print-color-adjust: exact;
+						}
+						@page 
+						{
+							size: auto;
+							margin: -15em;
+                            margin-top: auto;
+						}
+                        .container
+						{
+							background-color: #BDC3C7;
+                            font-family: Consolas;
+						}
+                        .left
+                        {
+                            background-color: #F5CBA7;
+                        }
+                        .right
+                        {
+                            background-color: white;
+                            font-size: 1.15em;
+                        }
+                        .leftTitles
+                        {
+                            background-color: #1B2631;
+                            color: white;
+                            display: block;
+                        }
+                        .head{
+                            padding-left: 15px;
+                        }
+                        .rightTitles{
+                            background-color: #F5CBA7;
+                            color: black;
+                            display: block;
+                            margin-top: 1.5em;
+                        }
+                        .black-circle {
+                            background-color: black;
+                            width: 20px;
+                            height: 20px;
+                            border-radius: 50%;
+                            margin-right: 0.25em;
+                            cursor: pointer;
+                            display: inline;
+                        }
+                        .white-circle {
+                            background-color: white;
+                            width: 20px;
+                            height: 20px;
+                            border-radius: 50%;
+                            margin-right: 0.25em;
+                            cursor: pointer;
+                            display: inline;
+                        }
+                        .etudes{
+                            margin-top : 3em;
+                        }
+                        </style>
+					    <link rel="stylesheet" type="text/css" href="cvedit.css" />
+					    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+                    </head>
+                    <body>
+                    <div class="container" id="container">
+                            <div id="me">
+                                <div class="row" >
+                                    <div class="col-md-4 left">
+                                        <span>
+                                            <img class="mx-auto d-block rounded-circle pt-4" src="myPic.png" alt="" id="pic"/>
+                                        </span>
+                                        <span class="leftTitles mt-5 py-2 text-center">
+                                            <h3>Contact</h3>
+                                        </span>
+                                        <ul class="mt-3">
+                                            <li>Telephone: <xsl:value-of select="//cv/entete/telephone"/></li>
+                                            <li>Email: <xsl:value-of select="//cv/entete/mail"/></li>
+                                            <li>Github: <xsl:value-of select="//cv/entete/@github"/></li>
+                                        </ul>
+                                        <span class="leftTitles mt-2 py-2 text-center">
+                                            <h3>Langues</h3>
+                                        </span>
+                                        <xsl:call-template name="showLanguage"/>
+                                        <span class="leftTitles mt-2 py-2 text-center">
+                                            <h3>Software</h3>
+                                        </span>
+                                        <xsl:call-template name="showSoftware"/>
+                                    </div>
+                                    <div class="col-md-7 ml-5 right">
+                                        <div class="mt-5 head">
+                                            <h3><xsl:value-of select="//cv/entete/nom"/><span class="ml-2"><xsl:value-of select="//cv/entete/prenom"/></span></h3>
+                                            <div class="mt-3 ml-3">
+                                                <p><em><xsl:value-of select="//cv/entete/description"/></em></p>
+                                            </div>
+                                        </div>
+                                        <span class="rightTitles etudes pl-2 py-2">
+                                            <h3>Etudes</h3>
+                                        </span>
+                                        <div class="mt-2 head">
+                                            <xsl:call-template name="showEducation"/>
+                                        </div>
+                                        <span class="rightTitles pl-2 py-2">
+                                            <h3>Projects</h3>
+                                        </span>
+                                        <div class="mt-2 head">
+                                            <xsl:call-template name="showProjects"/>
+                                        </div>
+                                        <span class="rightTitles pl-2 py-2">
+                                            <h3>Loisirs et intêrets</h3>
+                                        </span>
+                                        <div class="mt-2 head">
+                                            <xsl:call-template name="showHobbies"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                        <script type="text/javascript" src="jquery-3.5.1.min.js"></script>
+                        <script type="text/javascript" src="cvedit.js"></script>
+                    </body>
+			    </html>
+		    </xsl:template>
+            <xsl:template name="useThisElseThat">
+                <xsl:param name="this"/>
+                <xsl:param name="that"/>
+                <xsl:choose>
+                    <xsl:when test="$this!=''">
+                        <span class="thisElseThat"><xsl:value-of select="$this"/></span>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <span class="thisElseThat"><xsl:value-of select="$that"/></span>
+                    </xsl:otherwise>
+                </xsl:choose>
+		    </xsl:template>
+            <xsl:template name="showDateRange">
+                <xsl:param name="fromDate"/>
+                <xsl:param name="toDate"/>
+                <xsl:param name="noToDate"/>
+                <span class="thisElseThat">(<xsl:value-of select="$fromDate"/> - 
+                <xsl:call-template name="useThisElseThat">
+                    <xsl:with-param name="this" select="$toDate"/>
+                    <xsl:with-param name="that" select="$noToDate"/>
+                </xsl:call-template>)</span>
+            </xsl:template>
+            <xsl:template name="showEstablishment">
+                <xsl:param name="establishment"/>
+                <xsl:param name="noEstablishment"/>
+                <xsl:call-template name="useThisElseThat">
+                    <xsl:with-param name="this" select="$establishment"/>
+                    <xsl:with-param name="that" select="$noEstablishment"/>
+                </xsl:call-template>
+		    </xsl:template>
+            <xsl:template name="showEducation">
+                <h5 class="qualtype mt-4"><xsl:value-of select="//cv/Formations/diplome[1]/@type"/></h5>
+                <xsl:for-each select="//cv/Formations/diplome">
+                    <xsl:if test="@type != preceding-sibling::diplome[1]/@type">
+                        <h5 class="qualtype mt-4"><xsl:value-of select="@type"/></h5>
+                    </xsl:if>
+                    <div>
+                    <p class="qualcontent"><xsl:value-of select="./intitule"/></p>
+                    <xsl:call-template name="showEstablishment">
+                        <xsl:with-param name="establishment" select="@establishment"/>
+                        <xsl:with-param name="noEstablishment" select="''"/>
+                    </xsl:call-template>
+                    <xsl:call-template name="showDateRange">
+                        <xsl:with-param name="fromDate" select="./annee/@from"/>
+                        <xsl:with-param name="toDate" select="./annee/@to"/>
+                        <xsl:with-param name="noToDate" select="'En cours'"/>
+                    </xsl:call-template>
+                    </div>
+                </xsl:for-each>
+            </xsl:template>
+            <xsl:template name="showEmployment">
+                <xsl:for-each select="//cv//stages/stage">
+                    <h5 class="jobtitle mt-4">
+                        <strong><xsl:value-of select="./titre"/></strong>, <xsl:value-of select="@establishment"/>
+                        <span>
+                            <xsl:call-template name="showDateRange">
+                                <xsl:with-param name="fromDate" select="./date/@from"/>
+                                <xsl:with-param name="toDate" select="./date/@to"/>
+                                <xsl:with-param name="noToDate" select="'En cours'"/>
+                            </xsl:call-template>
+                        </span>
+                    </h5>
+                    <p class="jobdescription"><xsl:value-of select="./description"/></p>
+                </xsl:for-each>
+		    </xsl:template>
+            <xsl:template name="displayBlack">
+                <xsl:param name="pStart"/>
+                <xsl:param name="pEnd"/>
+                <xsl:if test="not($pStart > $pEnd)">
+                    <xsl:choose>
+                        <xsl:when test="$pStart = $pEnd">
+                            <div class="black-circle {$pStart}"></div>
+                            <xsl:text>&#xA;</xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:variable name="vMid" select=
+                            "floor(($pStart + $pEnd) div 2)"/>
+                            <xsl:call-template name="displayBlack">
+                                <xsl:with-param name="pStart" select="$pStart"/>
+                                <xsl:with-param name="pEnd" select="$vMid"/>
+                            </xsl:call-template>
+                            <xsl:call-template name="displayBlack">
+                                <xsl:with-param name="pStart" select="$vMid+1"/>
+                                <xsl:with-param name="pEnd" select="$pEnd"/>
+                            </xsl:call-template>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:if>
+            </xsl:template>
+            <xsl:template name="displayWhite">
+                <xsl:param name="pStart"/>
+                <xsl:param name="pEnd"/>
+                <xsl:if test="not($pStart > $pEnd)">
+                    <xsl:choose>
+                        <xsl:when test="$pStart = $pEnd">
+                            <div class="white-circle {$pStart}"></div>
+                            <xsl:text>&#xA;</xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:variable name="vMid" select=
+                            "floor(($pStart + $pEnd) div 2)"/>
+                            <xsl:call-template name="displayWhite">
+                                <xsl:with-param name="pStart" select="$pStart"/>
+                                <xsl:with-param name="pEnd" select="$vMid"/>
+                            </xsl:call-template>
+                            <xsl:call-template name="displayWhite">
+                                <xsl:with-param name="pStart" select="$vMid+1"/>
+                                <xsl:with-param name="pEnd" select="$pEnd"/>
+                            </xsl:call-template>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:if>
+            </xsl:template>
+            <xsl:template name="showLanguage">
+                <xsl:for-each select="//cv//langues/langue">
+                    <div class="mt-2">
+                        <h5 class="ml-3">
+                            <strong>
+                            <div class="row ml-2 mt-2 {./niveau}">
+                                <div class="col-md-3">
+                                    <p><xsl:value-of select="./intitule"/></p>
+                                </div>
+                                <xsl:call-template name="displayBlack">
+                                    <xsl:with-param name="pStart" select="1"/>
+                                    <xsl:with-param name="pEnd" select="./niveau"/>
+                                </xsl:call-template>
+                                <xsl:call-template name="displayWhite">
+                                    <xsl:with-param name="pStart" select="1"/>
+                                    <xsl:with-param name="pEnd" select="10 - ./niveau"/>
+                                </xsl:call-template>
+                            </div>
+                            </strong>
+                        </h5>
+                    </div>
+                </xsl:for-each>
+		    </xsl:template>
+            <xsl:template name="showHobbies">
+                <xsl:for-each select="//cv//loisirs/loisir">
+                        <h5 class="hobTitle mt-4">
+                            <strong><xsl:value-of select="@type"/></strong>
+                        </h5>
+                        <p class="hobContent"><xsl:value-of select="@description"/></p>
+                </xsl:for-each>
+		    </xsl:template>
+            <xsl:template name="showSoftware">
+                <xsl:for-each select="//cv//competences/competence">
+                    <div class="mt-3">
+                        <h5 class="ml-1">
+                            <strong>
+                            <div class="row ml-3 {./niveau}">
+                                <div class="col-md-3">
+                                    <p><xsl:value-of select="./titre"/></p>
+                                </div>
+                                <xsl:call-template name="displayBlack">
+                                    <xsl:with-param name="pStart" select="1"/>
+                                    <xsl:with-param name="pEnd" select="./niveau"/>
+                                </xsl:call-template>
+                                <xsl:call-template name="displayWhite">
+                                    <xsl:with-param name="pStart" select="1"/>
+                                    <xsl:with-param name="pEnd" select="10 - ./niveau"/>
+                                </xsl:call-template>
+                            </div>
+                            </strong>
+                        </h5>
+                    </div>
+                </xsl:for-each>
+		    </xsl:template>
+            <xsl:template name="showProjects">
+                <xsl:for-each select="//cv//project">
+                    <h5 class="project mt-4">
+                        <strong><xsl:value-of select="@type"/></strong>
+                    </h5>
+                    <p class="projectDescription"><xsl:value-of select="@description"/></p>
+                </xsl:for-each>
+		    </xsl:template>
+    </xsl:stylesheet>
+	<cv>
+		<entete
+			address="corner of bd mly youssef and bd el hank street 2 n 13, Casablanca"
+            github="github.com/ouassimabbari">
+            <nom>ABBARI</nom>
+            <prenom>OUASSIM</prenom>
+            <dateDeNaissance>19/01/1995</dateDeNaissance>
+            <nationalite>Moroccan</nationalite>
+            <telephone>+212 708239990</telephone>
+            <mail>wassim.abbari@gmail.com</mail>
+			<description>méticuleux, consciencieux et très attentif aux détails, intéressé par un stage
+            dans le développement des applications web et desktop, armé par un excellent savoir faire
+            en matière de programmation, développement et design, facilement adaptable et intégrable 
+            dans n'importe quelle équipe grâce à une forte capacité à résoudre les problèmes et un fort
+            esprit d'analyse.</description>
+		</entete>
+        <stages>
+			<stage
+				establishment="Total">
+                <titre>Internship</titre>
+                <date 
+                from="July 2018"
+				to="Aug 2018">
+                </date>
+				<description>working on a python desktop application to show stats about sales</description>
+			</stage>
+			<stage
+				establishment="UpWork">
+                <titre>Freelance web developper</titre>
+                <date
+                from="Aug 2018">
+                </date>
+				<description>development of responsive web applications using symfony, bootstrap, html and jQuery</description>
+			</stage>
+		</stages>
+        <Formations>
+			<diplome
+				type="Lycée">
+                <annee
+                from="2010"
+				to="2013">
+                </annee>
+                <intitule>Obtention du baccalauréat </intitule>
+			</diplome>
+			<diplome
+				establishment="Ecole nationale des sciences appliquées"
+				type="Etudes superieures">
+                <annee
+                from="2013">
+                </annee>
+				<intitule>Eleve ingénieur en 4éme année génie informatique</intitule>
+			</diplome>
+		</Formations>
+        <langues>
+            <langue>
+                <intitule>Anglais</intitule>
+                <niveau>9</niveau>
+            </langue>
+        </langues>
+        <langues>
+            <langue>
+                <intitule>Français</intitule>
+                <niveau>8</niveau>
+            </langue>
+        </langues>
+        <langues>
+            <langue>
+                <intitule>Espagnol</intitule>
+                <niveau>5</niveau>
+            </langue>
+        </langues>
+        <langues>
+            <langue>
+                <intitule>Arabe</intitule>
+                <niveau>9</niveau>
+            </langue>
+        </langues>
+        <competences>
+            <competence>
+                <titre>Php</titre>
+                <niveau>10</niveau>
+            </competence>
+        </competences>
+        <competences>
+            <competence>
+                <titre>Symfony</titre>
+                <niveau>9</niveau>
+            </competence>
+        </competences>
+        <competences>
+            <competence>
+                <titre>Java</titre>
+                <niveau>9</niveau>
+            </competence>
+        </competences>
+        <competences>
+            <competence>
+                <titre>Xml</titre>
+                <niveau>9</niveau>
+            </competence>
+        </competences>
+        <competences>
+            <competence>
+                <titre>fx / fxml</titre>
+                <niveau>8</niveau>
+            </competence>
+        </competences>
+        <competences>
+            <competence>
+                <titre>swing</titre>
+                <niveau>8</niveau>
+            </competence>
+        </competences>
+        <competences>
+            <competence>
+                <titre>C</titre>
+                <niveau>9</niveau>
+            </competence>
+        </competences>
+        <competences>
+            <competence>
+                <titre>Css</titre>
+                <niveau>9</niveau>
+            </competence>
+        </competences>
+        <competences>
+            <competence>
+                <titre>Bootstrap</titre>
+                <niveau>10</niveau>
+            </competence>
+        </competences>
+        <competences>
+            <competence>
+                <titre>Javascript</titre>
+                <niveau>9</niveau>
+            </competence>
+        </competences>
+        <competences>
+            <competence>
+                <titre>Vue/Nuxt.js</titre>
+                <niveau>9</niveau>
+            </competence>
+        </competences>
+        <competences>
+            <competence>
+                <titre>Node.js</titre>
+                <niveau>9</niveau>
+            </competence>
+        </competences>
+        <competences>
+            <competence>
+                <titre>SQL</titre>
+                <niveau>10</niveau>
+            </competence>
+        </competences>
+        <competences>
+            <competence>
+                <titre>NOSQL</titre>
+                <niveau>9</niveau>
+            </competence>
+        </competences>
+        <competences>
+            <competence>
+                <titre>PLSQL</titre>
+                <niveau>8</niveau>
+            </competence>
+        </competences>
+        <project
+        type="Symfony"
+        description="Application web symfony similaire a airbnb pour la location des objets">
+        </project>
+        <project
+        type="Java swing"
+        description="Application desktop pour la gestion des medicaments, activités et rendez-vous">
+        </project>
+        <project
+        type="Java fx"
+        description="jeu desktop d'intelligence artificielle du monde du wumpus">
+        </project>
+        <project
+        type="XML/XSLT"
+        description="Ce cv a été réalisé avec xml/xslt html css bootstrap et jQuery">
+        </project>
+        <project
+        type="Node.js"
+        description="application web de statistiques covid-19 en Vue.js, Node.js et mongodb">
+        </project>
+        <loisirs>
+            <loisir
+            type="Boxe"
+            description="classé deuxième dans le championnat régional chaouia (2010)">
+            </loisir>
+            <loisir
+            type="Lecture"
+            description="Principalement autour de sujets scientifique et dérniéres innovations technologiques dans le monde de programmation ou bien en électronique">
+            </loisir>
+        </loisirs>
+    </cv>
+</doc>

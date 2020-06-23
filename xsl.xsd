@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/1999/XSL/Transform" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xs:import schemaLocation="cv.xsd"/>
+    <xs:element name="stylesheet">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="xsl:output"/>
+                <xs:element maxOccurs="unbounded" ref="xsl:template"/>
+            </xs:sequence>
+            <xs:attribute name="id" use="required" type="xs:NCName"/>
+            <xs:attribute name="version" use="required" type="xs:decimal"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="output">
+        <xs:complexType>
+            <xs:attribute name="method" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="template">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="xsl:param"/>
+                <xs:choice minOccurs="0">
+                    <xs:element ref="span"/>
+                    <xs:element ref="xsl:call-template"/>
+                    <xs:element ref="xsl:choose"/>
+                    <xs:element ref="xsl:if"/>
+                </xs:choice>
+                <xs:element minOccurs="0" ref="h5"/>
+                <xs:choice minOccurs="0">
+                    <xs:element ref="html"/>
+                    <xs:element ref="xsl:for-each"/>
+                </xs:choice>
+            </xs:sequence>
+            <xs:attribute name="match" type="xs:anyURI"/>
+            <xs:attribute name="name" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="param">
+        <xs:complexType>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="for-each">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="xsl:if"/>
+                <xs:choice>
+                    <xs:element ref="div"/>
+                    <xs:sequence>
+                        <xs:element ref="h5"/>
+                        <xs:element ref="p"/>
+                    </xs:sequence>
+                </xs:choice>
+            </xs:sequence>
+            <xs:attribute name="select" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="choose">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="xsl:when"/>
+                <xs:element ref="xsl:otherwise"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="when">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element ref="span"/>
+                <xs:sequence>
+                    <xs:element ref="div"/>
+                    <xs:element ref="xsl:text"/>
+                </xs:sequence>
+            </xs:choice>
+            <xs:attribute name="test" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="text">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="otherwise">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element ref="span"/>
+                <xs:sequence>
+                    <xs:element ref="xsl:variable"/>
+                    <xs:element maxOccurs="unbounded" ref="xsl:call-template"/>
+                </xs:sequence>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="variable">
+        <xs:complexType>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+            <xs:attribute name="select" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="if">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element ref="h5"/>
+                <xs:element ref="xsl:choose"/>
+            </xs:choice>
+            <xs:attribute name="test" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="call-template">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="xsl:with-param"/>
+            </xs:sequence>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="with-param">
+        <xs:complexType>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+            <xs:attribute name="select" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="value-of">
+        <xs:complexType>
+            <xs:attribute name="select" use="required"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
