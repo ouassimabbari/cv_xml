@@ -361,7 +361,7 @@
         <langues>
             <langue>
                 <intitule>French</intitule>
-                <niveau>9</niveau>
+                <niveau>10</niveau>
             </langue>
         </langues>
         <langues>
@@ -379,7 +379,7 @@
         <competences>
             <competence>
                 <titre>Javascript</titre>
-                <niveau>8</niveau>
+                <niveau>9</niveau>
             </competence>
         </competences>
         <competences>
@@ -402,14 +402,14 @@
         </competences>
         <competences>
             <competence>
-                <titre>Vue/Nuxt.js</titre>
-                <niveau>9</niveau>
+                <titre>Vue.js</titre>
+                <niveau>8</niveau>
             </competence>
         </competences>
         <competences>
             <competence>
                 <titre>Node.js</titre>
-                <niveau>9</niveau>
+                <niveau>8</niveau>
             </competence>
         </competences>
         <competences>
@@ -437,7 +437,7 @@
             </competence>
         </competences>
         <project
-        type="Web development"
+        type="Symfony"
         description="Airbnb like Symfony web application for loaning objects">
         </project>
         <project

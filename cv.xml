@@ -27,7 +27,7 @@
 						}
                         .container
 						{
-							background-color: #BDC3C7;
+							background-color: #F5CBA7;
                             font-family: Consolas;
 						}
                         .left
@@ -36,14 +36,15 @@
                         }
                         .right
                         {
-                            background-color: white;
-                            font-size: 1.15em;
+                            background-color: #F5CBA7;
+                            font-size: 1.2em;
                         }
                         .leftTitles
                         {
-                            background-color: #1B2631;
-                            color: white;
+                            background-color: #F5CBA7;
+                            color: black;
                             display: block;
+                            margin-top: 1.5em;
                         }
                         .head{
                             padding-left: 15px;
@@ -77,59 +78,83 @@
                         }
                         </style>
 					    <link rel="stylesheet" type="text/css" href="cvedit.css" />
-					    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+					    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />         
+                        <script src="https://use.fontawesome.com/ebf88f8f5d.js"></script>
                     </head>
                     <body>
                     <div class="container" id="container">
                             <div id="me">
+                            <div class="row">
+                                <div class="col-md-4 left mt-5">
+                                    <span>
+                                        <img class="mx-auto d-block rounded-circle pt-4" src="myPic.png" alt="" id="pic"/>
+                                    </span>
+                                </div>
+                                <div class="col-md-7 ml-5 right">
+                                    <div class="mt-5 head">
+                                        <h3><xsl:value-of select="//cv/entete/nom"/><span class="ml-2"><xsl:value-of select="//cv/entete/prenom"/></span></h3>
+                                        <div class="mt-3 ml-3">
+                                            <p><em><xsl:value-of select="//cv/entete/description"/></em></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                          
                                 <div class="row" >
                                     <div class="col-md-4 left">
-                                        <span>
-                                            <img class="mx-auto d-block rounded-circle pt-4" src="myPic.png" alt="" id="pic"/>
-                                        </span>
-                                        <span class="leftTitles mt-5 py-2 text-center">
-                                            <h3>Contact</h3>
-                                        </span>
-                                        <ul class="mt-3">
-                                            <li>Telephone: <xsl:value-of select="//cv/entete/telephone"/></li>
-                                            <li>Email: <xsl:value-of select="//cv/entete/mail"/></li>
-                                            <li>Github: <xsl:value-of select="//cv/entete/@github"/></li>
-                                        </ul>
-                                        <span class="leftTitles mt-2 py-2 text-center">
+                                        <hr/>
+                                        <div class="leftTitles mt-5 py-2 text-center">
                                             <h3>Langues</h3>
-                                        </span>
+                                        </div>
                                         <xsl:call-template name="showLanguage"/>
-                                        <span class="leftTitles mt-2 py-2 text-center">
+                                        <hr/>
+                                        <div class="leftTitles mt-5 py-2 text-center">
                                             <h3>Software</h3>
-                                        </span>
+                                        </div>
                                         <xsl:call-template name="showSoftware"/>
                                     </div>
                                     <div class="col-md-7 ml-5 right">
-                                        <div class="mt-5 head">
-                                            <h3><xsl:value-of select="//cv/entete/nom"/><span class="ml-2"><xsl:value-of select="//cv/entete/prenom"/></span></h3>
-                                            <div class="mt-3 ml-3">
-                                                <p><em><xsl:value-of select="//cv/entete/description"/></em></p>
+                                        <hr class="mt-4"/>
+                                        <div class="row mt-3 text-center d-flex justify-content-center">
+                                            <h3><i class="fa fa-address-book mr-3" aria-hidden="true"></i>Contact</h3>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <p class="p-2">
+                                                    <i class="fa fa-phone mr-3 ml-4" aria-hidden="true"></i>
+                                                    <xsl:value-of select="//cv/entete/telephone"/>
+                                                </p>
+                                                <p class="p-2">
+                                                    <i class="fa fa-envelope mr-3 ml-4" aria-hidden="true"></i>
+                                                    <xsl:value-of select="//cv/entete/mail"/>
+                                                </p>
                                             </div>
-                                        </div>
-                                        <span class="rightTitles etudes pl-2 py-2">
-                                            <h3>Etudes</h3>
-                                        </span>
-                                        <div class="mt-2 head">
-                                            <xsl:call-template name="showEducation"/>
-                                        </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex flex-row">
+                                                    <i class="fa fa-github mr-3 p-2" aria-hidden="true"></i>
+                                                    <p class="p-2"><xsl:value-of select="//cv/entete/@github"/></p>
+                                                </div>
+                                                
+                                                <div class="d-flex flex-row">
+                                                    <i class="fa fa-linkedin mr-3 p-2" aria-hidden="true"></i>
+                                                    <p class="p-2"><xsl:value-of select="//cv/entete/@linkedin"/></p>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <hr/>
                                         <span class="rightTitles pl-2 py-2">
-                                            <h3>Projects</h3>
+                                            <h3><i class="fa fa-tasks mr-3"></i>Projets</h3>
                                         </span>
                                         <div class="mt-2 head">
                                             <xsl:call-template name="showProjects"/>
                                         </div>
-                                        <span class="rightTitles pl-2 py-2">
-                                            <h3>Loisirs et intêrets</h3>
+                                        <hr/>
+                                        <span class="rightTitles etudes pl-2 py-2">
+                                            <h3><i class="fa fa-graduation-cap mr-3"></i> Etudes</h3>
                                         </span>
                                         <div class="mt-2 head">
-                                            <xsl:call-template name="showHobbies"/>
+                                            <xsl:call-template name="showEducation"/>
                                         </div>
-                                    </div>
+                                    </div>                                    
                                 </div>
                             </div>
                     </div>
@@ -256,7 +281,7 @@
                     <div class="mt-2">
                         <h5 class="ml-3">
                             <strong>
-                            <div class="row ml-2 mt-2 {./niveau}">
+                            <div class="row ml-3 {./niveau} mt-2">
                                 <div class="col-md-3">
                                     <p><xsl:value-of select="./intitule"/></p>
                                 </div>
@@ -287,7 +312,7 @@
                     <div class="mt-3">
                         <h5 class="ml-1">
                             <strong>
-                            <div class="row ml-3 {./niveau}">
+                            <div class="row ml-4 {./niveau}">
                                 <div class="col-md-3">
                                     <p><xsl:value-of select="./titre"/></p>
                                 </div>
@@ -317,7 +342,8 @@
 	<cv>
 		<entete
 			address="corner of bd mly youssef and bd el hank street 2 n 13, Casablanca"
-            github="github.com/ouassimabbari">
+            github="github.com/ouassimabbari"
+            linkedin="linkedin.com/in/ouassim-abbari-7b6702120">
             <nom>ABBARI</nom>
             <prenom>OUASSIM</prenom>
             <dateDeNaissance>19/01/1995</dateDeNaissance>
@@ -376,7 +402,7 @@
         <langues>
             <langue>
                 <intitule>Français</intitule>
-                <niveau>8</niveau>
+                <niveau>9</niveau>
             </langue>
         </langues>
         <langues>
@@ -482,6 +508,10 @@
             </competence>
         </competences>
         <project
+        type="Node.js"
+        description="application web de statistiques covid-19 en Vue.js, Node.js et mongodb">
+        </project>
+        <project
         type="Symfony"
         description="Application web symfony similaire a airbnb pour la location des objets">
         </project>
@@ -495,11 +525,7 @@
         </project>
         <project
         type="XML/XSLT"
-        description="Ce cv a été réalisé avec xml/xslt html css bootstrap et jQuery">
-        </project>
-        <project
-        type="Node.js"
-        description="application web de statistiques covid-19 en Vue.js, Node.js et mongodb">
+        description="Ce cv a été réalisé avec xml/xslt, html, css et jQuery">
         </project>
         <loisirs>
             <loisir
@@ -508,7 +534,7 @@
             </loisir>
             <loisir
             type="Lecture"
-            description="Principalement autour de sujets scientifique et dérniéres innovations technologiques dans le monde de programmation ou bien en électronique">
+            description="Principalement autour des sujets scientifiques et dérniéres innovations technologiques dans le monde de programmation ou bien en électronique">
             </loisir>
         </loisirs>
     </cv>
